@@ -1,0 +1,117 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <script type="text/javascript" src="../internal.js"></script>
+    <style type="text/css">
+    * {
+        margin:0;
+        padding:0;
+        color: #838383;
+    }
+    table {
+        font-size: 12px;
+        margin: 10px;
+        line-height: 30px;
+        width:95%;
+    }
+    td{display:block; margin-bottom:8px;}
+    .txt {
+        width:96%;
+        height:30px;
+        line-height:30px;
+        border:1px solid #d7d7d7;
+    }
+    
+    </style>
+</head>
+
+<body style="background:#eee;">
+    <table>
+        <tr>
+            <td>
+                <label for="phone_text">提示文字:</label>
+            </td>
+            <td>
+                <input class="txt" id="phone_text" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="phone_number">电话号码:</label>
+            </td>
+            <td>
+                <input class="txt" id="phone_number" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input id="sync_seller_phone" type="checkbox" />
+                <label for="sync_seller_phone">同步销售电话(当销售转发时有效)</label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" id="msg"><span style='color: red'>请输入文字与电话号码!</span></td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+    
+    var range = editor.selection.getRange(),
+    link = range.collapsed ? editor.queryCommandValue( "link" ) : editor.selection.getStart(),
+    url,
+    rangeLink = domUtils.findParentByTagName(range.getCommonAncestor(),'a',true),
+    orgText;
+link = domUtils.findParentByTagName( link, "a", true );
+if(link){
+    url = utils.html(link.getAttribute( '_href' ) || link.getAttribute( 'href', 2 ));
+	$G("phone_text").value =link.innerText;
+	$G("phone_number").value = url.indexOf('tel:')>-1?url.substr(4):'';
+	link.dataset['syncSellerPhone']==1&&($G('sync_seller_phone').checked=true);
+	$G('msg').innerHTML='';
+}
+    
+    
+    
+    
+    
+    function PhoneCheck(s) {
+        // var reg = /(^[0-9]{3,4}\-[0-9]{3,8}$)|(^[0-9]{3,8}$)|(^\([0-9]{3,4}\)[0-9]{3,8}$)|(^0{0,1}13[0-9]{9}$)/
+        //return reg.test(s);
+        return true;
+    }
+
+    function handleDialogOk() {
+    	
+        var text=$G('phone_text').value,phone = $G('phone_number').value.replace(/^\s+|\s+$/g, ''),sync_seller_phone=$G('sync_seller_phone').checked;
+        if (PhoneCheck(phone)) {
+             $G("msg").innerHTML = "";
+             if(link){
+            	 link.innerHTML=text;
+            	 link.href='tel:'+phone;
+            	 link.dataset['syncSellerPhone']=sync_seller_phone?1:0;
+             }else{
+	             var html='<a href="tel:'+phone+'" data-sync-seller-phone="'+(sync_seller_phone?1:0)+'">'+text+'</a>';
+	             editor.execCommand('insertHtml',html);
+             }
+             dialog.close();
+        } else {
+            $G("msg").innerHTML = "<span style='color: red'>电话号码格式不正确!</span>";
+            return false;
+        }
+    }
+    dialog.onok = handleDialogOk;
+    $G('phone_number').onblur = function() {
+        if (!PhoneCheck(this.value)) {
+            $G("msg").innerHTML = "<span style='color: red'>电话号码格式不正确!</span>";
+        } else {
+            $G("msg").innerHTML = "";
+        }
+    };
+    </script>
+</body>
+
+</html>

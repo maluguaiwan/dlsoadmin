@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>后台管理</title>
+  {load href="/static/admin/plugins/bootstrap/css/bootstrap.min.css" /}
+  {load href="/static/admin/plugins/font-awesome/css/font-awesome.min.css" /}
+  {load href="/static/admin/plugins/Ionicons/css/ionicons.min.css" /}
+  {load href="/static/admin/css/admin.css" /}
+  {load href="/static/admin/css/admin.common.css" /}
+  {load href="/static/admin/css/skins/skin-blue.min.css" /}
+  {load href="/static/admin/css/googleapis.fonts.css" /}
+  {__CSS__}
+  <!--[if lt IE 9]>
+  <script src="/static/admin/plugins/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="/static/admin/plugins/respond/respond.min.js"></script>
+  <![endif]-->
+  {load file="/static/admin/plugins/jquery/jquery.min.js"/}
+  {load file="/static/admin/plugins/bootstrap/js/bootstrap.min.js"/}
+  {load file="/static/admin/js/adminlte.min.js"/}
+  {load file="/static/admin/plugins/layer/layer.js"/}
+  {load file="/static/admin/js/common.js"/}
+  {__SCRIPT__}
+</head>
+<body class="skin-blue sidebar-mini">
+<div class="wrapper">
+  {include file="common/header" /}
+  {include file="common/menu" /}
+  {__CONTENT__}
+  {include file="common/footer"/}
+</div>
+</body>
+</html>

@@ -1,0 +1,375 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <script type="text/javascript" src="../internal.js"></script>
+    <link rel="stylesheet" href="../../../../../magazine/css/article.css" />
+    <script type="text/javascript" src="/public/admin/js/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="/public/admin/magazine/js/magazine.template.js"></script>
+    
+    <style type="text/css">
+    * {
+        margin:0;
+        padding:0;
+    }
+    input{border:none;}
+    table input[type="text"]{border:1px solid #d7d7d7; width: 96%; height: 30px; padding:0 4px;}
+    .clr:after{
+        visibility: hidden;
+        display: block;
+        height: 0;
+        content: '';
+        clear: both;
+    }
+    table{
+        font-size: 12px;
+        width:100%;
+        margin-bottom:20px;
+    }
+    td{
+        height: 30px;
+        line-height: 30px;
+    }
+    select{
+        width: 100%;
+        height: 30px;
+    }
+    input[type="checkbox"]{
+        vertical-align: middle;
+        outline:none;
+    }
+    td{
+        padding: 0 5px;display:block;
+    }
+    .options{
+    display: none;
+    }
+    ul{
+        padding: 0 5px;
+    }
+    a{text-decoration:none; color:#333;}
+    ul li{
+        padding-bottom: 8px;
+        line-height: 23px;
+    }
+    .box{height: 100%;overflow-y: auto;}
+    #form_content{overflow-y:auto; height: 55%;}
+    #form_content li:first-child{font-size: 14px; margin:15px 0 5px;color:#333;text-align: center;}
+    #form_content li:first-child span{font-size: 12px; color:#999;}
+    .colum1{width: 55px; height: 25px; line-height: 25px;float:left;}
+    .colum1 select{height:100%;}
+    .colum2{width: 98%; display:block;height: 32px;margin:0 0 3px; position: relative; box-sizing: border-box; }
+    .dblBg{position:absolute;top:0;left:0; width: 100%; height: 100%;z-index:1;}
+    .colum2 a{position:absolute;right:23px;top:7px;z-index:20; display:none;width: 18px; height: 18px;}
+    #form_content li :hover a{display:block;}
+    .colum3{display:none;}
+    .colum3 input{margin-left:5px;}
+    .options{padding-top: 6px;}
+    .btn-add{
+        border:1px solid #d7d7d7;
+        border-radius: 3px;
+        padding: 5px 6px;
+        cursor: pointer;
+        background: #0DC88C;
+        display:block;
+        width:92%;margin:0 auto;color:#fff;
+        height: 22px;
+        line-height: 22px;
+        text-align: center; font-size: 14px;
+    }
+    .addForm{background: #eee; overflow:hidden; position: absolute;top:0;left:0; z-index:100; width: 100%; height: 100%;display:none;}
+    .addForm ul{overflow:hidden;}
+    .addForm li{height: 70px; line-height: 35px;  padding:2px 10px 10px; color:#666; margin:20px auto; background: #fff;border:2px solid #fff;}
+    .addForm li:hover{border:2px solid #0DC88C;}
+    .addForm ul span{display:block; border:1px solid #DACACA;width: 100%; height: 30px;}
+    .fields_act {   
+    background: #fff;
+    width: 98%;
+    border: 1px solid #999;
+    padding: 4px;
+    box-sizing:border-box;
+    }
+    .colum2 .input_act{padding:0 ; border:0 none;  border-bottom:1px solid #d7d7d7; width: 98%;}
+    .field_checkbox_radio{overflow:hidden; display:none;}
+    .radio-input{width: 100%;box-sizing: border-box; padding:4px; margin:5px 0; border-radius:3px; border:1px solid #d6d6d6;}
+    .radio-control{height: 27px;padding:0 5px;}
+    .option-button{
+        width: 14px;
+        height: 14px;
+        float: right;
+        margin-top: 5px;
+        cursor: pointer;
+    }
+     .option-button img{width: 100%; height: 100%;}
+    .button-add{
+
+        margin-right:20px;
+    }
+    .showInput{
+        overflow:hidden;
+        width:96%;
+        height:30px;
+        line-height:26px;
+        border:1px solid #d7d7d7;
+        padding:0 4px;
+        color:#666;
+        outline:none;
+        background: #fff;
+    }
+    .showInput i,.showInput s,.showInput input{float:left;}
+    .showInput i{width: 20px; height: 20px;margin-top:5px;}
+    .showInput input{height: 100%; width: 88%;outline:none; border:none;}
+    .showInput i img{width: 100%; height: 100%;}
+    .showInput s{font-size: 20px; color:red; text-decoration: none; line-height: 34px; }
+    .checkbox_left{overflow:hidden; float:left;width: 60px;}
+    .checkbox_left input{margin-left:5px;}
+    .tabls{float:left; overflow:hidden; width: 120px; line-height: 26px;}
+    .tabls input{margin:0 5px 0 15px;}
+    </style>
+</head>
+
+<body style="width:295px;background:#eee;">
+    
+    <div class="box">
+       <ul id="form_content">
+           <li>表单内容<span>（双击编辑表单）</span></li>
+       </ul>
+        
+     <table>
+        <tr>
+            <td>
+                <span id="add_field" class="btn-add">添加字段</span>
+            </td>
+        </tr>
+    </table>
+    <table>
+            <tr>
+                <td>
+                    <label for="phone_text">按钮名称:</label>
+                </td>
+                <td>
+                    <input class="txt" id="button_title" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="phone_text">提交提示语:</label>
+                </td>
+                <td colspan="3">
+                    <input class="txt" id="button_tip" type="text"  />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <label for="phone_text"><input id="button_api_check" type="checkbox"  />使用自定义API提交数据 </label>
+                </td>
+            </tr>
+             <tr id="api_url_tr" style="display: none;">
+                <td>
+                    <label for="phone_text">API链接地址:</label>
+                </td>
+                <td colspan="3">
+                    <input class="txt" id="button_api_url" type="text" style="width: 96%;" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="addForm">
+        <ul>
+            <li data-name="姓名" data-type="name" >
+                <a href="javascript:;">姓名</a>
+                <span></span>
+            </li>
+            <li data-name="手机" data-type="mobile" ><a href="javascript:;">手机</a>
+                <span></span>
+            </li>
+            <li data-name="输入框" data-type="input" ><a href="javascript:;">小文本框</a>
+                <span></span>
+            </li>
+            <li data-name="选项卡" data-type="radio" ><a href="javascript:;">选项卡</a>
+                <span></span>
+            </li>
+        </ul>
+    </div>
+    
+    <script type="text/html" id="fields_template">
+        <li><input type="hidden" value="<%=field.id%>" class="field_id">
+            <div class="fields clr">
+                
+                
+                    <span class="colum2" >
+                        <span class="dblBg" ></span>
+                        <div class="showInput">
+                            <i><img src="icon/inputIcon.png" alt="" /></i>
+                            <input class="txt field_name" type="text"  value="<%=field.name%>"/>
+                            <s><%=field.required==1?'*':''%></s>
+                        </div>
+                        <%if(typeof field.modify=='undefind' || field.modify===true){%>
+                        <a href="javascript:;" class="delele_field"><img src="icon/closeIcon.png" /></a>
+                        <%}%>
+                    </span>
+                    
+                    <span class="colum3">
+                        <%if(typeof field.modify=='undefind' || field.modify===true){%>
+                            <label>必填<input type="checkbox" value="1" class="field_required" <%=field.required?'checked=\"checked\"':''%>></label>
+                        <%}else{%>
+                            <label>必填<input type="hidden" value="1" class="field_required"></label>
+                        <%}%>
+                    </span>
+                
+                
+                <%if(field.type=='radio'||field.type=='checkbox'){%>
+                    <div class="field_checkbox_radio">
+                        <div class="radio-list">
+                            <ul>
+                                <%for(var item in field.items ){%>
+                                    <li><input class="radio-input" value="<%=field.items[item]%>"></li>
+                                <%}%>
+                            </ul>
+                        </div>
+                        <div class="radio-control">
+                            <div class="checkbox_left"><label>必填<input type="checkbox" value="1" class="field_required" <%=field.required?'checked=\"checked\"':''%>></label></div>
+                            <% var radio_name=field.id+"_"+new Date().getTime()+Math.random().toString(36).substr(2)%>
+                            <div class="tabls"><input type="radio" name="<%=radio_name%>" value="radio" <%=field.type=='radio'?'checked=\"checked\"':''%> />单选<input type="radio" name="<%=radio_name%>"  <%=field.type=='checkbox'?'checked=\"checked\"':''%> value="checkbox"/>多选</div>
+                            <div class="option-button button-delete"><img src="icon/delImg.png" /></div>
+                            <div class="option-button button-add"><img src="icon/addImg.png" /></div>
+                        </div>
+                    </div>
+                <%}%>
+            </div>
+        </li>
+        </script>
+        <script type="text/javascript">
+                $(document).not($('.fields')).click(function(){
+                    $('.dblBg').show();
+                    $('.colum3').hide();
+                    $('.showInput').removeClass('input_act');
+                    $('.fields').removeClass('fields_act');
+                    $('.field_checkbox_radio').hide();
+                });
+                 $('#form_content').on('click','.fields',function(event){
+                    event.stopPropagation();
+                });
+                $('#form_content').on('dblclick','.dblBg',function(){
+                     $(this).hide();
+                    $(this).parents('.fields').addClass('fields_act');
+                    $(this).siblings('.showInput').find('input').focus();
+                    $(this).siblings('.showInput').addClass('input_act');
+                    $(this).parents('.colum2').siblings('.colum3').show();
+                    $(this).parents('li').siblings().find('.colum3').hide();
+                    $(this).parents('li').siblings().find('.showInput').removeClass('input_act');
+                    $(this).parents('li').siblings().find('.fields').removeClass('fields_act');
+                    $(this).parents('li').siblings().find('.dblBg').show();
+                    $('.field_checkbox_radio').hide();
+                    var newVal = $(this).siblings('.showInput').find('input').val();
+                    if(newVal == '选项卡'){
+                        $(this).parents('li').find('.field_checkbox_radio').show();
+                        $('.colum3').hide();
+                    }
+                });
+                $('#form_content').on('change','.field_required',function(){
+                    if($(this).prop('checked')){
+                        $(this).parents('li').find('s').show();
+                    }else{
+                        $(this).parents('li').find('s').hide();
+                    }
+                });
+                $('#form_content').on('click','.button-add',function(){
+                   $(this).parents('.field_checkbox_radio').find('ul').append($('.addInput').html());
+                });
+                $('#form_content').on('click','.button-delete',function(){
+                    var lilength = $(this).parents('.field_checkbox_radio').find('li').length;
+                   if(lilength > 1){
+                       $(this).parents('.field_checkbox_radio').find('li:last').remove();
+                   }
+                });
+                $('#form_content').on('click','.delele_field',function(){
+                    var result=confirm('确认要删除此字段吗?');
+                    if(result){
+                        $(this).parents('li').remove();
+                    }
+                });
+        </script>
+
+    <script type="text/html" class="addInput">
+        <li><input class="radio-input" value="选择内容"></li>   
+    </script>
+
+    <script type="text/javascript">  
+    function handleDialogOk() {
+        var form={};
+        form.submit={}
+        form.submit.title=$G('button_title').value;
+//      form.submit.color=$G('button_color').value;
+        form.submit.tip=$G('button_tip').value;
+        form.api=$('#button_api_check').prop('checked');
+        form.api_url=$G('button_api_url').value;
+        form.fields=[];     
+        $('#form_content li').each(function(){
+            var tr=$(this);
+            var id=tr.find('.field_id').val();
+            var type=tr.find('.field_type').val();
+            var name=tr.find('.field_name').val();
+            var required=tr.find('.field_required').prop('checked');
+            var options=tr.find('.field_options').val();
+            form.fields.push({
+                id:id,
+                type:type,
+                name:name,
+                required:required?1:0,
+                options:options     
+            });
+        });
+        editor.execCommand('insertform',form);
+    }
+    
+    function init(){
+        var form=editor.execCommand('getform');
+        form||(form={title:'表单',submit:{title:'提交','color':'red','tip':'感谢您的参与'}});
+        $G('button_title').value=form.submit.title||'';
+//      $G('button_color').value=form.submit.color||'';
+        $G('button_tip').value=form.submit.tip||'';
+        $G('button_api_check').checked=form.api?true:false;
+        $G('button_api_check').checked=form.api?true:false;
+        $('#button_api_check').prop('checked')?$('#api_url_tr').show():$('#api_url_tr').hide();
+        $('#button_api_url').val(form.api_url||'');
+        
+        form.fields||(form.fields=[{id:"",name:"姓名",required:1,modify:false,type:'name'},{id:"",name:"手机",required:1,modify:false,type:'mobile'}]);
+        form.fields.forEach(function(field,index){
+            var html=baidu.template('fields_template',{field:field});
+            $('#form_content').append(html);
+        });
+    }
+    init();
+    $('#button_api_check').click(function(){
+        $(this).prop('checked')?$('#api_url_tr').show():$('#api_url_tr').hide();
+    });
+    $('.addForm li').click(function(){
+        $('.addForm').hide();
+        var name=$(this).data('name'),type=$(this).data('type');
+        var field={id:0,name:name,type:type,modify:true,required:true};
+        if(type=='radio'){
+            field.items=['选项内容1','选项内容2','选项内容3','选项内容4'];
+        }
+         var html=baidu.template('fields_template',{field:field});
+          $('#form_content').append(html);
+    });
+    $('#add_field').click(function(){
+        $('.addForm').show();
+    })
+    $('#form_content').delegate('.field_type', 'change', function() {
+        if($(this).val()=='radio'||$(this).val()=='checkbox'){
+            $(this).parents('li').find('.options').show();
+        }else{
+            $(this).parents('li').find('.options').hide();
+        }
+    });
+    dialog.onok = handleDialogOk;
+    </script>
+</body>
+
+</html>

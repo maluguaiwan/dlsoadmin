@@ -32,4 +32,6 @@ return [
     'taglib_begin' => '{',
     // 标签库标签结束标记
     'taglib_end'   => '}',
+    // 自定义标签预加载
+    'taglib_pre_load'=>'common\taglib\AdminTagLib'
 ];

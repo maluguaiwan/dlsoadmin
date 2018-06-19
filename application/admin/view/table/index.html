@@ -1,0 +1,13 @@
+{layout name="layout/layout" /}
+<div class="content-wrapper">
+    <section class="content-header">
+      <h1>表格<small>ajaxDataTable</small></h1>
+      <ol class="breadcrumb">
+        <li><a href="{:url('Index/index')}"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li class="active">表格</li>
+      </ol>
+    </section>
+    <section class="content container-fluid">
+		{:widget('Widget/ajaxTable',['data'=>$setting])}
+    </section>
+</div>

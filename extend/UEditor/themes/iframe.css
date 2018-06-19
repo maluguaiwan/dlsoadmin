@@ -1,0 +1,14 @@
+/*可以在这里添加你自己的css*/
+img{
+	max-width: 100%;
+}
+.countvalues{
+	position: relative;
+	left: 20px;
+	bottom: 20px;
+	font-size: 14px;
+}
+.iframe{
+	max-width: 100%;
+	z-index: 1;
+}

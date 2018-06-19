@@ -1,0 +1,130 @@
+<div class="box">
+	<div class="box-header">
+		<h3 class="box-title">{$title|default=''}</h3>
+		<div class="actions pull-right" style="margin-right: 50px;">
+	    	{eq name="isAdvSearch" value="1"}
+	            <div class="btn-group">
+	             	<a class="btn btn-primary" href="javascript:;">高级查询<i class="icon-angle-down"></i></a>
+	            </div>
+	        {else/}
+	        	<a href="javascript:;" class="collapse"></a>
+	        {/eq}
+	    	<div class="btn-group">
+	          <button type="button" class="btn btn-default">显示/隐藏列</button>
+	          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+	            <span class="caret"></span>
+	            <span class="sr-only"></span>
+	          </button>
+	          <ul class="dropdown-menu" role="menu" id="{$id}_column_toggler">
+	          	{volist name="columns" id="v" key="i"}
+	                <li>
+		                <label>
+		                    {eq name="v.defaultVisble" value="hidden"}
+		                 	<input type="checkbox" data-column="{$i-1}">
+		                	{else/}
+		                    <input type="checkbox" checked data-column="{$i-1}">
+		                	{/eq}
+		                    {$v.sTitle}
+		                </label>
+	                </li>
+	            {/volist}
+	          </ul>
+	        </div>
+	    </div>
+	</div>
+	{notempty name='adv_search_file'}
+	<div class="box-search">
+		{include file="$adv_search_file"/}
+	</div>
+	{/notempty}
+	
+	<!-- /.box-header -->
+	<div class="box-body">
+		<table id="{$id}" class="table table-bordered table-striped {$class}" data-column-group="{$column_group|default=''}">
+			<thead>
+            	<tr>
+					{volist name="columns" id="v"}
+            		<th class="{$v.sClass}">{$v.sTitle}</th>
+					{/volist}
+            	</tr>
+        	</thead>
+        	<tbody>
+        	</tbody>
+        	{eq name="footer" value="1"}
+        	<tfoot id="table_footer">
+        		<tr>
+					{volist name="columns" id="v"}
+    				<th class="{$v.sClass}">{$v.sTitle}</th>
+					{/volist}
+        		</tr>
+            </tfoot>
+        	{/eq}
+       </table>
+    </div>
+</div>
+{load href="/static/admin/widget/css/dataTables.bootstrap.css"/}
+{load file="/static/admin/widget/js/jquery.dataTables.js,/static/admin/widget/js/dataTables.bootstrap.js,/static/admin/widget/js/widget.table.ajax.js,/static/admin/widget/js/widget.table.ajax.render.js" /}
+<script>
+(function(window){
+	var options={
+		id:'{$id}',
+		sSearch:"搜索",
+		lengthChange:false,
+      	searching:false,
+      	ordering:true,
+      	info:true,
+		bProcessing:true,
+  		unchecker:'{$unchecker|default=""}',
+		report:'{$report|default=""}',
+		search_label_name:'{$search_label_name|default="检索"}: ',
+		is_default_search:'{$is_default_search|default="show"}',
+		aoColumns: [
+		{volist name="columns" id="c"}
+			{literal}{{/literal} mData: '{$c.mData}',sClass:"{$c.sClass}" {notempty name="c.sWidth"},sWidth:"{$c.sWidth|default="0"}"{/notempty}  {literal}},{/literal}
+		{/volist}
+		],
+	
+		aoColumnDefs:[{
+		    bSortable : false,
+		    aTargets: [{$nosort}]
+		}],
+		{notempty name="nopage"}
+			aLengthMenu:[[-1],['所有']],
+			bPaginate:false,
+		{/notempty}
+		{notempty name="dataCallback"}
+			dataCallback:'{$dataCallback|default=""}',		
+		{/notempty}
+		useButtons:{present name="buttons"}true{else/}false{/present},
+		searchDelay:600
+	};
+
+{volist name="columns" id="c" key="k"} 
+	{present name="c.fnRender"}
+	options.aoColumnDefs.push({
+		targets:{$k-1},
+		render:$.fn.dataTable.actionRender('{$c.fnRender}')
+	});
+	{/present}
+{eq name="c.defaultVisble" value="hidden"}
+	options.aoColumnDefs.push({
+		aTargets:[{$k-1}],
+		visible:false,
+		bVisible:false,
+	});
+{/eq}
+{/volist}
+// 高级查询 放入到表格的头部
+{eq name="advSearchInTable" value="1"}
+	options.advSearchInTable=1;
+{/eq}
+{eq name="url_dynamic" value="1"}
+	{literal}options.sAjaxSource = '{$ajaxURL|default=""}';{/literal}
+{else/}
+    options.sAjaxSource = '{$ajaxURL|default=""}';
+{/eq}
+	var ajaxTable=new AjaxTable(options);
+	ajaxTable.init();
+	window.ajaxTable=ajaxTable;
+})(window);
+</script>

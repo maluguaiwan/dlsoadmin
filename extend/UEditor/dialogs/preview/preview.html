@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <style>
+            html,body{
+                height:100%;
+                width:100%;
+                padding:0;
+                margin:0;
+            	background: #DEDCDC;
+            }
+            #preview{
+                width:100%;
+                height:100%;
+                padding:0;
+                margin:0;
+            }
+            #preview *{font-family:sans-serif;font-size:16px;}
+            .content{
+			     margin: 0px !important; 
+		    	 padding: 10px !important; 
+            }
+            .scene_title_baner{
+				background: #000000;
+            }
+        </style>
+            <script type="text/javascript" src="../internal.js"></script>
+		    <script type="text/javascript" src="http://libs.useso.com/js/jquery/2.0.0/jquery.min.js"></script>
+		    <script type="text/javascript" src="../../../../Magazine2/js/magazine.article.js"></script>
+		    <link rel="stylesheet" href="../../../../Magazine2/css/article.css" />
+        <title></title>
+    </head>
+    <body class="view">
+        <div id="preview" style="background: #DEDCDC;">
+			<div style="">
+				<div  style="margin: 0 auto;width: 320px;">
+                    <img src="/dev.scrm.ooyyee.cn/Public/admin/magazine2/images/phone_top.png" class="img100">
+                    <div class="scene_title_baner">
+                        <div class="scene_title" style="    background: #000000;  text-align: center;    line-height: 40px;    height: 40px;    font-size: 24px;
+    						text-overflow: ellipsis; overflow: hidden; white-space: nowrap;color: #fff">我的微杂志</div>
+                    </div>
+                    <div style="background: #FFFFFF;">
+                    <div class="content" data-url="{:U('data')}" style="height: 486px;background: #FFFFFF;">
+						<div class="marginb">
+							<h3 id="preview_article_title"></h3>
+							<span id="post-date"></span>
+						</div>
+						<div id="content-container"></div>
+					</div>
+					</div>
+                </div>
+			</div>
+        </div>
+    </body>
+    <script>
+    Date.prototype.format=function (fmt) {
+	    var o = {
+	        "M+": this.getMonth() + 1, //月份
+	        "D+": this.getDate(), //日
+	        "h+": this.getHours(), //小时
+	        "m+": this.getMinutes(), //分
+	        "s+": this.getSeconds(), //秒
+	        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+	        "S": this.getMilliseconds() //毫秒
+	    };
+	    if (/([Y]+)/.test(fmt))
+	        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+	    for (var k in o)
+	        if (new RegExp("(" + k + ")").test(fmt))
+	            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+	    return fmt;
+} ;
+	    var title=editor.execCommand('getTitle');
+		$G('preview_article_title').innerHTML=title;
+		$G('post-date').innerHTML=new Date().format('YYYY-MM-DD hh:mm:ss');
+		var html=editor.getContent();
+		html=html.replace(/src/g,'data-src');
+		$G('content-container').innerHTML=html;
+		$('img').each(function(){
+			if($(this).data('src')){
+				$(this).attr('src',$(this).data('src'));
+			}
+		});
+		$('iframe').each(function(){
+			var width=document.getElementById("content-container").offsetWidth,height=Math.ceil(3*width/4);
+			$(this).attr('width',width);
+			$(this).attr('height',height);
+			if($(this).data('src')){
+				$(this).attr('src',$(this).data('src'));
+			}
+		});
+		$('._FORM_BROKE_TAG_').createForm({
+			id:'0',
+			pid:'0',
+			data:editor.execCommand('getform'),
+			url:''
+		});
+    </script>
+</html>
