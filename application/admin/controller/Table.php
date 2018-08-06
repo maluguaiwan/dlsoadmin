@@ -39,8 +39,8 @@ class Table extends AdminBase
         
         $count = Admin::count();
         foreach ($list as &$v){
-            $v['action_str'] = "<div class='btn-group'><a href=".url('edit',['id'=>$v['id']])." class='btn btn-sm btn-primary'>编辑</a>";
-            $v['action_str'] .= "<a href=".url('del',['id'=>$v['id']])." class='btn btn-sm btn-danger'>删除</a></div>";
+            $v['action_str'] = auth_action(CONTROLLER_NAME.'/edit', 'a', '编辑', ['id' => $v['id']]);
+            $v['action_str'] .= auth_action(CONTROLLER_NAME.'/delete', 'box', '删除', ['id' => $v['id']], 'danger', 'xs', 'trash');
         }
         return $this->_ajax_return_data ( $list, $count );
     }

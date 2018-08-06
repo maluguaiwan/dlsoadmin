@@ -2,16 +2,17 @@
 /**
  * 部件类
  */
-namespace app\admin\widget;
+namespace app\common\widget;
 
 use think\Controller;
 
 class Widget extends Controller
 {
-    public function header(){
-        return $this->fetch('widget/header');
-    }
-    
+    /**
+     * ajaxTable 部件
+     * @param unknown $data
+     * @return mixed|string
+     */
     public function ajaxTable($data){
         $default = array();
         $default['id']='dt';
@@ -47,7 +48,7 @@ class Widget extends Controller
             }
         }
         $this->assign($data);
-        return $this->fetch('widget/ajaxtable');
+        return $this->fetch('common@widget/ajaxtable');
     }
 }
 

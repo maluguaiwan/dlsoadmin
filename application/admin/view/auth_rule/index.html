@@ -1,0 +1,77 @@
+{layout name="layout/layout" /}
+<div class="content-wrapper">
+    <section class="content-header">
+      <h1>权限管理<small></small></h1>
+      <ol class="breadcrumb">
+        <li><a href="{:url('Index/index')}"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li>权限管理</li>
+        <li class="active">节点管理</li>
+      </ol>
+    </section>
+    <section class="content container-fluid">
+    	<div class="row">
+        	<div class="col-md-12">
+	            <div class="box">
+	            	<div class="box-header with-border">
+	                    <h3 class="box-title">节点管理</h3>
+	                    <div class="pull-right">
+	                        {:auth_action(CONTROLLER_NAME.'/create', 'a', '创建节点', '', 'primary', 'sm', 'save')} 
+	                    </div>
+	                </div>
+	                <div class="box-body table-responsive">
+	                    <table class="table table-bordered table-hover">
+	                        <tr>
+	                            <th>节点名称</th>
+	                            <th>节点地址</th>
+	                            <th>节点类型</th>
+	                            <th>状态</th>
+	                            <th>是否菜单</th>
+	                            <th>节点图标</th>
+	                            <th>排序</th>
+	                            <th width="124">操作</th>
+	                        </tr>
+	                        {volist name="dataList" id="vo"}
+	                        <tr>
+	                            <td>
+	                                {eq name="vo['level']" value="3"}　　　│　　　├{/eq}
+	                                {eq name="vo['level']" value="2"}　　　├{/eq}
+	                                <span class="editable" data-pk="{$vo.id}" data-name="title" data-url="{:url(CONTROLLER_NAME.'/edit', 'id='.$vo['id'])}" >{$vo.title}</span>
+	                            </td>
+	                            <td><span class="editable" data-pk="{$vo.id}" data-name="name" data-url="{:url(CONTROLLER_NAME.'/edit', 'id='.$vo['id'])}" >{$vo.name}</span></td>
+	                            <td>{$vo.level_turn}</td>
+	                            <td>
+	                                <a href="javascript:void(0);" data-id="{$vo.id}" data-field="status" 
+	                                data-value="{$vo.status}" data-url="{:url('edit', 'id='.$vo['id'])}" 
+	                                class='editimg fa {if $vo.status == 1 }fa-check-circle text-green{else /}fa-times-circle text-red{/if}'></a>
+	                            </td>
+	                            <td>
+	                                <a href="javascript:void(0);" data-id="{$vo.id}" data-field="ismenu" 
+	                                data-value="{$vo.ismenu}" data-url="{:url('edit', 'id='.$vo['id'])}" 
+	                                class='editimg fa {if $vo.ismenu == 1 }fa-check-circle text-green{else /}fa-times-circle text-red{/if}'></a>
+	                            </td>
+	                            <td align="center"><i class="{$vo.icon}"></td>
+	                            <td><span class="editable" data-pk="{$vo.id}" data-name="sorts" data-url="{:url(CONTROLLER_NAME.'/edit', 'id='.$vo['id'])}" >{$vo.sorts}</span></td>
+	                            <td>
+	                            	{:auth_action(CONTROLLER_NAME.'/edit', 'a', '编辑', ['id' => $vo['id']])} 
+									{:auth_action(CONTROLLER_NAME.'/delete', 'box', '删除', ['id' => $vo['id']], 'danger', 'xs', 'trash')} 
+	                            </td>
+	                        </tr>
+	                        {/volist}
+	                    </table>
+	                </div>
+	            </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+	$(function(){
+		$('.table').on('click','.delete',function(){
+			var url = $(this).data('url');
+			var yes = function(){
+				window.location.href = url;
+			}
+			layer_confirm("确认删除吗?",yes);
+		});
+	});
+</script>

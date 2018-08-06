@@ -1,15 +1,32 @@
 <?php
 namespace app\index\controller;
 
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Shared\Html;
+
 class Index
 {
     public function index()
     {
-        return '<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:18px;} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 42px }</style><div style="padding: 24px 48px;"> <h1>:) </h1><p> ThinkPHP V5.1<br/><span style="font-size:30px">12载初心不改（2006-2018） - 你值得信赖的PHP框架</span></p></div><script type="text/javascript" src="https://tajs.qq.com/stats?sId=64890268" charset="UTF-8"></script><script type="text/javascript" src="https://e.topthink.com/Public/static/client.js"></script><think id="eab4b9f840753f8e7"></think>';
+        $html = file_get_contents(ROOT_PATH.'word/test.html');
+        $word = new PhpWord();
+        /*
+        $styleTable = [
+            'align' => 'center',
+            'borderSize' => '1',
+            'borderRightColor' => '#666',
+            'valign' => 'center'
+        ];
+        
+        $word->addTableStyle('table', $styleTable);
+        */
+        //$phpWord = \PhpOffice\PhpWord\IOFactory::load(ROOT_PATH.'word/hello.doc');
+        $section = $word->addSection();
+        //$section->setStyle(['table'=>$styleTable]);
+        Html::addHtml($section,$html);
+        $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($word, "Word2007");
+        $xmlWriter->save(ROOT_PATH.'word/new1.docx');
+        echo $html;
     }
 
-    public function hello($name = 'ThinkPHP5')
-    {
-        return 'hello,' . $name;
-    }
 }

@@ -1,10 +1,18 @@
+<style>
+	.adv-show{
+		display: block;
+	}
+	.adv-hide{
+		display: none;
+	}
+</style>
 <div class="box">
 	<div class="box-header">
 		<h3 class="box-title">{$title|default=''}</h3>
 		<div class="actions pull-right" style="margin-right: 50px;">
 	    	{eq name="isAdvSearch" value="1"}
 	            <div class="btn-group">
-	             	<a class="btn btn-primary" href="javascript:;">高级查询<i class="icon-angle-down"></i></a>
+	             	<a class="btn btn-primary adv-display-btn" href="javascript:;">高级查询<i class="icon-angle-down"></i></a>
 	            </div>
 	        {else/}
 	        	<a href="javascript:;" class="collapse"></a>
@@ -33,7 +41,7 @@
 	    </div>
 	</div>
 	{notempty name='adv_search_file'}
-	<div class="box-search">
+	<div class="box-search {eq name='adv_search_display' value='1'} adv-show {else} adv-hide {/eq}">
 		{include file="$adv_search_file"/}
 	</div>
 	{/notempty}
@@ -126,5 +134,14 @@
 	var ajaxTable=new AjaxTable(options);
 	ajaxTable.init();
 	window.ajaxTable=ajaxTable;
+{eq name="isAdvSearch" value="1"}
+	$(".adv-display-btn").click(function(){
+		if($(".box-search").hasClass('adv-show')){
+			$(".box-search").removeClass('adv-show').addClass('adv-hide');
+		}else{
+			$(".box-search").removeClass('adv-hide').addClass('adv-show');
+		}
+	});
+{/eq}
 })(window);
 </script>
